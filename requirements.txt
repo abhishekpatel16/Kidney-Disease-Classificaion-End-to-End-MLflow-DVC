@@ -1,0 +1,39 @@
+# Machine Learning Framework
+tensorflow==2.12.0  # TensorFlow is an open-source deep learning framework for building and training neural networks.
+
+# Data Handling & Manipulation
+pandas  # Library for data analysis and manipulation (e.g., reading CSVs, data frames, etc.).
+numpy  # Fundamental package for numerical computing in Python, supports arrays and mathematical operations.
+
+# Data Science & Visualization
+matplotlib  # Visualization library for plotting graphs, charts, and figures.
+seaborn  # Statistical data visualization library built on top of matplotlib, used for better-looking plots.
+
+# Experiment Tracking & Version Control
+dvc  # Data Version Control, helps manage datasets, ML models, and experiments.
+mlflow==2.2.2  # MLflow for tracking ML experiments, managing models, and handling deployment.
+
+# Development & Notebook Support
+notebook  # Supports Jupyter Notebook environment for interactive coding and visualization.
+
+# Utility Libraries
+python-box==6.0.2  # A utility that allows dictionary-like objects with dot-accessible attributes.
+pyYAML  # Library for parsing and writing YAML configuration files.
+tqdm  # A simple progress bar for loops and processes.
+ensure==1.0.2  # Ensures type correctness in Python functions.
+joblib  # Enables parallel computing and caching of function results.
+types-PyYAML  # Provides type hinting support for PyYAML.
+pywinpty==2.0.11  # A Windows-specific package related to terminal handling, often required for Jupyter Notebook.
+
+# Scientific Computing
+scipy  # Scientific computing library that extends numpy, used for optimization, statistics, and signal processing.
+
+# Web Framework & API
+Flask  # Lightweight web framework for building web applications and APIs.
+Flask-Cors  # Enables Cross-Origin Resource Sharing (CORS) in Flask applications.
+
+# File Downloading
+gdown  # Utility for downloading files from Google Drive via command line.
+
+# Local Package (Custom Module)
+-e .  # Installs a local package in editable mode, useful if the project contains a custom module.
