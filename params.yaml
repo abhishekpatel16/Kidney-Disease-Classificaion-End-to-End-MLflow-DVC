@@ -6,10 +6,10 @@ BATCH_SIZE: 16  # Number of images processed in one training batch
 
 INCLUDE_TOP: False  # Whether to include the fully connected layers at the top of the model
 
-EPOCHS: 1  # Number of times the model will see the entire dataset during training
+EPOCHS: 20  # Number of times the model will see the entire dataset during training
 
 CLASSES: 2  # Number of output classes for classification
 
 WEIGHTS: imagenet  # Pre-trained weights to be used (e.g., "imagenet" for transfer learning)
 
-LEARNING_RATE: 0.01  # Step size for updating model weights during training
+LEARNING_RATE: 0.02  # Step size for updating model weights during training
