@@ -1,38 +1,34 @@
-# Import necessary modules
-from dataclasses import dataclass  # Provides a decorator to define a data class
-from pathlib import Path  # Pathlib provides an object-oriented approach to handle file paths
+from dataclasses import dataclass  # Importing dataclass to create immutable configuration objects
+from pathlib import Path  # Importing Path to handle file system paths
 
-# Define a data class for data ingestion configuration
-@dataclass(frozen=True)  # `frozen=True` makes the class immutable (prevents modifications after creation)
+# Configuration for Data Ingestion process
+@dataclass(frozen=True)  # frozen=True makes instances immutable
 class DataIngestionConfig:
-    root_dir: Path  # Path to the root directory where data will be stored
-    source_URL: str  # URL of the dataset to be downloaded
-    local_data_file: Path  # Path where the downloaded data file will be saved
-    unzip_dir: Path  # Directory where the dataset will be extracted
+    root_dir: Path  # Root directory for data ingestion
+    source_URL: str  # URL of the source data
+    local_data_file: Path  # Path to store the downloaded data locally
+    unzip_dir: Path  # Directory where the data will be extracted
 
-
-
-@dataclass(frozen=True)  # `frozen=True` makes the dataclass immutable (prevents modifications after initialization)
+# Configuration for preparing the base model
+@dataclass(frozen=True)
 class PrepareBaseModelConfig:
-    """
-    Configuration class for preparing the base model.
-
-    Attributes:
-        root_dir (Path): Directory where the base model-related artifacts will be stored.
-        base_model_path (Path): Path to the initial pre-trained base model.
-        updated_base_model_path (Path): Path where the updated base model will be saved.
-        params_image_size (list): Input image dimensions (e.g., [224, 224, 3] for VGG16).
-        params_learning_rate (float): Learning rate for model training.
-        params_include_top (bool): Whether to include the top classification layers in the base model.
-        params_weights (str): Pre-trained weights to use (e.g., "imagenet").
-        params_classes (int): Number of output classes for classification.
-    """
-    
-    root_dir: Path  # Root directory for storing model-related files
-    base_model_path: Path  # Path to the base model file
-    updated_base_model_path: Path  # Path where the updated model will be stored
-    params_image_size: list  # Image input size for the model
-    params_learning_rate: float  # Learning rate for model training
-    params_include_top: bool  # Whether to include the top layers of the model
-    params_weights: str  # Pre-trained model weights (e.g., "imagenet")
+    root_dir: Path  # Root directory for base model preparation
+    base_model_path: Path  # Path to the original base model
+    updated_base_model_path: Path  # Path to store the updated base model
+    params_image_size: list  # Image size parameter for the model
+    params_learning_rate: float  # Learning rate for fine-tuning
+    params_include_top: bool  # Whether to include the top layer in the model
+    params_weights: str  # Weights initialization type (e.g., 'imagenet')
     params_classes: int  # Number of output classes
+
+# Configuration for training process
+@dataclass(frozen=True)
+class TrainingConfig:
+    root_dir: Path  # Root directory for training
+    trained_model_path: Path  # Path to store the trained model
+    updated_base_model_path: Path  # Path to the updated base model
+    training_data: Path  # Path to training dataset
+    params_epochs: int  # Number of epochs for training
+    params_batch_size: int  # Batch size for training
+    params_is_augmentation: bool  # Whether data augmentation is applied
+    params_image_size: list  # Image size used during training
