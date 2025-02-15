@@ -1,52 +1,49 @@
-# Import all constants from the cnnClassifier.constants module
-# This might include file paths, model parameters, and other predefined values
-from cnnClassifier.constants import *  
+from cnnClassifier.constants import *  # Importing all constants defined in cnnClassifier.constants
+import os  # Importing os module for interacting with the operating system
+from cnnClassifier.utils.common import read_yaml, create_directories, save_json  # Utility functions for reading YAML, creating directories, and saving JSON
+from cnnClassifier.entity.config_entity import (DataIngestionConfig,
+                                                PrepareBaseModelConfig)  # Importing configuration entity classes
 
-# Import the os module for interacting with the operating system (e.g., file handling, path manipulation)
-import os  
-
-# Import utility functions from cnnClassifier.utils.common
-from cnnClassifier.utils.common import read_yaml, create_directories, save_json  
-# `read_yaml`: Reads YAML files and converts them into Python dictionaries
-# `create_directories`: Ensures that specified directories exist or creates them
-# `save_json`: Saves Python objects as JSON files
-
-# Import various configuration entity classes from cnnClassifier.entity.config_entity
-from cnnClassifier.entity.config_entity import (
-    DataIngestionConfig  # Configuration for data ingestion (e.g., downloading and preparing datasets)
-)
-
-
-
-
-# Define a configuration manager class to handle configuration settings
 class ConfigurationManager:
     def __init__(
         self,
-        config_filepath=CONFIG_FILE_PATH,  # Default path for the main configuration file
-        params_filepath=PARAMS_FILE_PATH  # Default path for the parameters file
+        config_filepath=CONFIG_FILE_PATH,  # Default configuration file path
+        params_filepath=PARAMS_FILE_PATH  # Default parameters file path
     ):
-        # Read and parse YAML configuration files
-        self.config = read_yaml(config_filepath)
-        self.params = read_yaml(params_filepath)
+        
+        self.config = read_yaml(config_filepath)  # Reading configuration file
+        self.params = read_yaml(params_filepath)  # Reading parameters file
 
-        # Ensure that the artifact root directory exists
-        create_directories([self.config.artifacts_root])
+        create_directories([self.config.artifacts_root])  # Creating the root directory for artifacts
 
-
-    # Method to retrieve data ingestion configuration
     def get_data_ingestion_config(self) -> DataIngestionConfig:
-        config = self.config.data_ingestion  # Extract the data ingestion section from the config
+        config = self.config.data_ingestion  # Extracting data ingestion configuration
 
-        # Ensure the root directory for data ingestion exists
-        create_directories([config.root_dir])
+        create_directories([config.root_dir])  # Creating root directory for data ingestion
 
-        # Create and return a DataIngestionConfig object with necessary parameters
         data_ingestion_config = DataIngestionConfig(
-            root_dir=config.root_dir,
-            source_URL=config.source_URL,
-            local_data_file=config.local_data_file,
-            unzip_dir=config.unzip_dir 
+            root_dir=config.root_dir,  # Path to the root directory
+            source_URL=config.source_URL,  # URL of the dataset source
+            local_data_file=config.local_data_file,  # Local file path for downloaded dataset
+            unzip_dir=config.unzip_dir  # Directory where the dataset will be extracted
         )
 
-        return data_ingestion_config  # Return the configuration object
+        return data_ingestion_config  # Returning the configured data ingestion object
+
+    def get_prepare_base_model_config(self) -> PrepareBaseModelConfig:
+        config = self.config.prepare_base_model  # Extracting base model preparation configuration
+        
+        create_directories([config.root_dir])  # Creating root directory for base model preparation
+
+        prepare_base_model_config = PrepareBaseModelConfig(
+            root_dir=Path(config.root_dir),  # Path to the root directory
+            base_model_path=Path(config.base_model_path),  # Path to the base model file
+            updated_base_model_path=Path(config.updated_base_model_path),  # Path to save the updated model
+            params_image_size=self.params.IMAGE_SIZE,  # Image size parameter
+            params_learning_rate=self.params.LEARNING_RATE,  # Learning rate parameter
+            params_include_top=self.params.INCLUDE_TOP,  # Include top layers parameter
+            params_weights=self.params.WEIGHTS,  # Model weights parameter
+            params_classes=self.params.CLASSES  # Number of output classes
+        )
+
+        return prepare_base_model_config  # Returning the configured base model preparation object

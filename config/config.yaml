@@ -14,3 +14,10 @@ data_ingestion:
 
   # Directory where the ZIP file will be extracted
   unzip_dir: artifacts/data_ingestion
+
+
+
+prepare_base_model:  # Main key for base model preparation settings
+  root_dir: artifacts/prepare_base_model  # Directory where all model-related artifacts will be stored
+  base_model_path: artifacts/prepare_base_model/base_model.h5  # Path to the initial pre-trained base model file
+  updated_base_model_path: artifacts/prepare_base_model/base_model_updated.h5  # Path where the updated base model will be saved
